@@ -10,6 +10,27 @@ public class MemberDao {
 		
 	}
 	
+	// 회원 조회하여 수정
+	public void modifyMember(Member member) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connection = DBHelper.getConnection();
+			preparedStatement = connection.prepareStatement("UPDATE member SET pw = ?, level = ? WHERE id = ?");
+			preparedStatement.setString(1, member.getPw());
+			preparedStatement.setInt(2, member.getLevel());
+			preparedStatement.setString(3, member.getId());
+			preparedStatement.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			DBHelper.close(null, preparedStatement, connection);
+		}	
+	}
+	
+	// 회원 조회
 	public Member selectMember(Member member) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;

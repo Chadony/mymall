@@ -10,6 +10,7 @@
 	<h1>index</h1>
 	<c:if test="${loginMember != null}">
 	${loginMember.id}님 반갑습니다.
+	<a href = "ModifyMemberController?id=${loginMember.id}">정보수정</a>
 	<a href = "${pageContext.request.contextPath}/LogoutController">로그아웃</a>
 	</c:if>
 	<c:if test="${loginMember == null}">

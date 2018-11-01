@@ -21,6 +21,7 @@ public class SearchMemberController extends HttpServlet {
 			Member searchMember = new Member();
 			String id = request.getParameter("id");
 			searchMember.setId(id);
+			System.out.println("<--"+ searchMember.getId());
 			this.memberDao = new MemberDao();
 			Member member = this.memberDao.selectMember(searchMember);
 			request.setAttribute("member", member);
