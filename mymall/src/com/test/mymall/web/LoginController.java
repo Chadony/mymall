@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.test.mymall.dao.MemberDao;
+import com.test.mymall.service.MemberService;
 import com.test.mymall.vo.Member;
 
 @WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
-	private MemberDao memberDao;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("LoginController.doGet()");
 		if(request.getSession().getAttribute("loginMember") == null) {
-			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
 		}
 		else {
 			response.sendRedirect("/IndexController");
@@ -25,6 +25,7 @@ public class LoginController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("LoginController.doPost()");
 		request.setCharacterEncoding("utf-8");
 		// 1. ID, PASSWORD
 		Member memberCheck = new Member();
@@ -32,8 +33,8 @@ public class LoginController extends HttpServlet {
 		String pw = request.getParameter("pw");
 		memberCheck.setId(id);
 		memberCheck.setPw(pw);
-		this.memberDao = new MemberDao();
-		Member member = this.memberDao.login(memberCheck);
+		MemberService memberService = new MemberService();
+		Member member = memberService.loginCheck(memberCheck);
 		if(member != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginMember", member);

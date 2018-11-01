@@ -5,6 +5,36 @@ import com.test.mymall.commons.DBHelper;
 import java.sql.*;
 
 public class MemberDao {
+	// 회원탈퇴
+	public void deleteMember(Connection connection, int no) {
+		
+	}
+	
+	public Member selectMember(Member member) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		Member searchMember = new Member();
+		try {
+			connection = DBHelper.getConnection();
+			preparedStatement = connection.prepareStatement("SELECT no, id, pw, level from member WHERE id = ?");
+			preparedStatement.setString(1, member.getId());
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			searchMember.setNo(resultSet.getInt(1));
+			searchMember.setId(resultSet.getString(2));
+			searchMember.setPw(resultSet.getString(3));
+			searchMember.setLevel(resultSet.getInt(4)); 
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			DBHelper.close(resultSet, preparedStatement, connection);
+		}	
+		return searchMember;
+	}
+	
 	// 로그인 실패시 -> null
 	// 로그인 성공시 -> 성공한 Member객체
 	public Member login(Member memberCheck) {

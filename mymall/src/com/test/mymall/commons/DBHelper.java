@@ -6,7 +6,7 @@ public class DBHelper {
 	public static Connection getConnection() throws Exception{
 		Connection connection = null;
         Class.forName("com.mysql.jdbc.Driver");
-        String jdbcDriver = "jdbc:mysql://localhost:3306/jjdev?useUnicode=true&characterEncoding=euckr";
+        String jdbcDriver = "jdbc:mysql://localhost:3306/mall?useUnicode=true&characterEncoding=euckr";
         String dbID = "root";
         String dbPW = "java0000";
         connection = DriverManager.getConnection(jdbcDriver, dbID, dbPW);

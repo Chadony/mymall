@@ -7,9 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>로그인 폼</h1>
-	<form action=<%=request.getContextPath()%>/LoginController method ="post">
-		<table border = "1">
+	<form action="<%=request.getContextPath()%>/AddMemberController" method="post">
+		<table>
 			<tr>
 				<td>id</td>
 				<td><input type="text" name="id"></td>
@@ -19,8 +18,15 @@
 				<td><input type="text" name="pw"></td>
 			</tr>
 			<tr>
-				<td colspan="2" style="text-align: center"><input type="submit" value="제출"/></td>
-	
+				<td>level</td>
+				<td>
+					<input type="radio" name="level" value="0" checked>고객
+					<input type="radio" name="level" value="1" >관리자
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="제출"/></td>
+
 			</tr>
 		</table>
 	</form>

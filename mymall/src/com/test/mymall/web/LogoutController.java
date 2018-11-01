@@ -7,12 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.test.mymall.dao.MemberItemDao;
-
-@WebServlet("/OrderListController")
-public class OrderListController extends HttpServlet {
-	private MemberItemDao memberItemDao;
+@WebServlet("/LogoutController")
+public class LogoutController extends HttpServlet {
+       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		memberItemDao.getMemberItemList(0);
+		System.out.println("LogoutController.doGet()");
+		request.getSession().invalidate();
+		response.sendRedirect(request.getContextPath()+"/IndexController"); 			
 	}
+
 }
