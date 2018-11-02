@@ -7,14 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.test.mymall.dao.MemberDao;
+import com.test.mymall.service.MemberService;
 import com.test.mymall.vo.Member;
 
 
 @WebServlet("/ModifyMemberController")
 public class ModifyMemberController extends HttpServlet {
-	private MemberDao memberDao;
+	private MemberService memberService;
 	//수정 폼
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("ModifyMemberController.doGet()");
@@ -26,12 +25,9 @@ public class ModifyMemberController extends HttpServlet {
 			System.out.println(id);
 			searchMember.setId(id);
 			System.out.println(searchMember.getId());
-			this.memberDao = new MemberDao();
-			System.out.println("하기싫어");
-			Member member = memberDao.selectMember(searchMember);
-			System.out.println("하기개싫어"+member.getId()+"<--"+member.getLevel());
+			memberService = new MemberService();
+			Member member = memberService.searchMember(searchMember);
 			request.setAttribute("member", member);
-			System.out.println("하기존나개싫어");
 			//forward
 			request.getRequestDispatcher("/WEB-INF/view/modifyMember.jsp").forward(request, response);
 		}
@@ -46,12 +42,12 @@ public class ModifyMemberController extends HttpServlet {
 		//로그인 확인
 		HttpSession session = request.getSession();
 		if(session.getAttribute("loginMember") != null) {
-			this.memberDao = new MemberDao();
+			memberService = new MemberService();
 			Member member = new Member();
 			member.setId(request.getParameter("id"));
 			member.setPw(request.getParameter("pw"));
 			member.setLevel(Integer.parseInt(request.getParameter("level")));
-			this.memberDao.modifyMember(member);
+			memberService.modifyMember(member);
 		}	
 		response.sendRedirect(request.getContextPath() + "/IndexController");
 	}

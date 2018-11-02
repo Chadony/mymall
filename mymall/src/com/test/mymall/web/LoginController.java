@@ -14,13 +14,14 @@ import com.test.mymall.vo.Member;
 
 @WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
+	private MemberService memberService;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("LoginController.doGet()");
 		if(request.getSession().getAttribute("loginMember") == null) {
 			request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
 		}
 		else {
-			response.sendRedirect("/IndexController");
+			response.sendRedirect(request.getContextPath() + "/IndexController");
 		}
 	}
 
@@ -33,7 +34,7 @@ public class LoginController extends HttpServlet {
 		String pw = request.getParameter("pw");
 		memberCheck.setId(id);
 		memberCheck.setPw(pw);
-		MemberService memberService = new MemberService();
+		memberService = new MemberService();
 		Member member = memberService.loginCheck(memberCheck);
 		if(member != null) {
 			HttpSession session = request.getSession();

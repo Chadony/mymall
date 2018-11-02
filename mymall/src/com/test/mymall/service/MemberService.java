@@ -1,6 +1,9 @@
 package com.test.mymall.service;
 
 import java.sql.*;
+
+import org.apache.ibatis.session.SqlSession;
+
 import com.test.mymall.commons.DBHelper;
 import com.test.mymall.dao.MemberDao;
 import com.test.mymall.dao.MemberItemDao;
@@ -35,14 +38,81 @@ public class MemberService {
 		}
 	}
 	
-	public void addMember(Member member) {
+	
+	/*public void removeMember(int no) {
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = DBHelper.getSqlSession();
+			sqlSession.commit();
+		} catch (Exception e) {
+			sqlSession.rollback();
+		}finally {
+			sqlSession.close();
+		}
+	}*/
+	
+	public void modifyMember(Member member) {
+		Connection connection = null;
 		memberDao = new MemberDao();
-		memberDao.insertMember(member);
+		try {
+			connection = DBHelper.getConnection();
+			connection.setAutoCommit(false);
+			memberDao.modifyMember(connection, member);
+			connection.commit();
+		}
+		catch(Exception e) {
+			try {
+				connection.rollback();
+			}
+			catch(SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		finally {
+			DBHelper.close(null, null, connection);
+		}
 	}
-	public Member loginCheck(Member member) {
-		Member login = null;
+	
+	public Member searchMember(Member member) {
+		Connection connection = null;
 		memberDao = new MemberDao();
-		login = memberDao.login(member);
-		return login;
+		try {
+			connection = DBHelper.getConnection();
+			member = memberDao.selectMember(connection, member);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			DBHelper.close(null, null, connection);
+		}
+		return member;
+	}
+	
+	public void addMember(Member member){
+		Connection connection = null;
+		memberDao = new MemberDao();
+		try {
+			connection = DBHelper.getConnection();
+			memberDao.insertMember(connection, member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			DBHelper.close(null, null, connection);
+		}
+	}
+	public Member loginCheck(Member member){
+		Connection connection = null;
+		Member memberCheck = null;
+		memberDao = new MemberDao();
+		try {
+			connection = DBHelper.getConnection();
+			memberCheck = memberDao.login(connection, member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			DBHelper.close(null, null, connection);
+		}
+		return memberCheck;
 	}
 }

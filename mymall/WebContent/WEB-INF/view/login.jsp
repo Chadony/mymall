@@ -7,7 +7,7 @@
 </head>
 <body>
 	<h1>로그인 폼</h1>
-	<form action=<%=request.getContextPath()%>/LoginController method ="post">
+	<form action="<%=request.getContextPath()%>/LoginController" method ="post">
 		<table border = "1">
 			<tr>
 				<td>id</td>
@@ -19,7 +19,6 @@
 			</tr>
 			<tr>
 				<td colspan="2" style="text-align: center"><input type="submit" value="제출"/></td>
-	
 			</tr>
 		</table>
 	</form>

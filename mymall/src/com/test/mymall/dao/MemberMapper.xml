@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mymall.dao.MemberMapper">
+	<select id ="selectMemberList" resultType ="com.test.mymall.vo.Member">
+		SELECT member_no as member FROM member
+	</select>
+	<select id="selectMEmberOne" resultType ="int">
+		SELECT no as no FROM no WHERE = #{no}
+	</select>
+	<insert id="insertMEmber" parameterType ="com.test.mymall.vo.Member">
+		INSERT INTO member
+			(no, id)
+		VALUSE #{no}, #{id} 
+	</insert>
+</mapper>
