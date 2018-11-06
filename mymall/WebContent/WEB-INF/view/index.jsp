@@ -11,6 +11,7 @@
 	<c:if test="${loginMember != null}">
 	${loginMember.id}님 반갑습니다.
 	<a href = "ModifyMemberController?id=${loginMember.id}">정보수정</a>
+	<a href = "OrderListController?memberNo=${loginMember.no}">주문목록</a>
 	<a href = "DeleteMemberController?no=${loginMember.no}">회원탈퇴</a>
 	<a href = "ItemListController">상품목록</a>
 	<a href = "LogoutController">로그아웃</a>

@@ -1,7 +1,13 @@
 package com.test.mymall.dao;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.test.mymall.vo.MemberItem;
 
 public class MemberItemDao {
 	public void deleteMemberItem(Connection connection, int no) throws Exception {
@@ -31,5 +37,14 @@ public class MemberItemDao {
 		resultSet.close();
 		preparedStatement.close();
 		return list;
+	}
+	
+	public void insertMemberItem(Connection connection, MemberItem memberItem) throws SQLException{
+		PreparedStatement preparedStatement = null;
+		preparedStatement = connection.prepareStatement("INSERT INTO member_item(member_no, item_no, order_date) VALUES(?, ?, now() )");
+		preparedStatement.setInt(1, memberItem.getMember_no());
+		preparedStatement.setInt(2, memberItem.getItem_no());
+		preparedStatement.executeUpdate();
+		preparedStatement.close();
 	}
 }

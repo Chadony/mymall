@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.test.mymall.service.MemberItemService;
 import com.test.mymall.vo.Member;
 import com.test.mymall.vo.MemberItem;
 
@@ -23,7 +24,7 @@ public class OrderController extends HttpServlet {
 			memberItemService = new MemberItemService();
 			int memberNo = member.getNo();
 			MemberItem memberItem = new MemberItem();
-			memberItem.setItem_no(itemno);
+			memberItem.setItem_no(itemNo);
 			memberItem.setMember_no(memberNo);
 			memberItemService.addMemberItem(memberItem);
 			response.sendRedirect(request.getContextPath() + "/IndexController");

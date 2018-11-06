@@ -28,6 +28,7 @@ public class MemberService {
 			connection.commit();
 		}catch(Exception e) {
 			try {
+				e.printStackTrace();
 				connection.rollback();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
